@@ -20,3 +20,6 @@ spec:
             cpu: "75m"
         ports:
         - containerPort: 8000
+        envFrom:
+          - secretRef:
+              name: db-pwd
