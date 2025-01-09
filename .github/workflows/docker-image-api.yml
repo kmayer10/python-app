@@ -1,5 +1,6 @@
 name: API Docker Image CI
-
+env:
+  ImageName: 'ghcr.io/kmayer10/python-api:v2.${{ github.run_number }}'
 on:
   push:
     branches: [ "main" ]
@@ -7,14 +8,10 @@ on:
       - 'api/*'
       - '.github/workflows/docker-image-api.yml'
   pull_request:
-    branches: [ "main" ]
-
+    branches: [ "main", "argocd-demo" ]
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Docker Login
@@ -28,3 +25,14 @@ jobs:
         cd api/
         docker image build . -f Dockerfile -t ghcr.io/kmayer10/python-api:v2.${{ github.run_number }}
         docker image push ghcr.io/kmayer10/python-api:v2.${{ github.run_number }}
+        cp api/deployment.yaml ./manifests/api/deployment.yaml
+    - name: Replace string in file
+      uses: MathieuSoysal/replace-string-in-file@v1.0.0
+      with:
+        file: ./manifests/api/deployment.yaml
+        old-string: ImageName
+        new-string: ${{ ImageName }}
+    - name: Build & PUSH the Docker image
+      run: |
+        cat ./manifests/api/deployment.yaml
+
