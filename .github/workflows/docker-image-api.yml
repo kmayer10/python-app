@@ -31,7 +31,7 @@ jobs:
       with:
         file: ./manifests/api/deployment.yaml
         old-string: ImageName
-        new-string: ${{ ImageName }}
+        new-string: $ImageName
     - name: Build & PUSH the Docker image
       run: |
         cat ./manifests/api/deployment.yaml
