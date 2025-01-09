@@ -31,9 +31,10 @@ jobs:
       with:
         file: ./manifests/api/deployment.yaml
         old-string: ImageName
-        new-string: $ImageName
+        new-string: ghcr.io/kmayer10/python-api:v2.${{ github.run_number }}
     - name: Build & PUSH the Docker image
       run: |
+        echo $ImageName
         git status
         cat ./manifests/api/deployment.yaml
 
