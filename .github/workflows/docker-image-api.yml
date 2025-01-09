@@ -30,8 +30,8 @@ jobs:
       uses: MathieuSoysal/replace-string-in-file@v1.0.0
       with:
         file: ./manifests/api/deployment.yaml
-        old-string: ImageName
-        new-string: ghcr.io/kmayer10/python-api:v2.${{ github.run_number }}
+        old-string: ImageTag
+        new-string: v2.${{ github.run_number }}
     - name: Build & PUSH the Docker image
       run: |
         echo $ImageName
