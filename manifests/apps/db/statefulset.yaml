@@ -19,4 +19,4 @@ spec:
         - containerPort: 5432
         envFrom:
           - secretRef:
-              name: db-connect
+              name: db-pwd
