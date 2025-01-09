@@ -24,8 +24,8 @@ jobs:
       run: |
         cd api/
         docker image build . -f Dockerfile -t ghcr.io/kmayer10/python-api:v2.${{ github.run_number }}
-        docker image push ghcr.io/kmayer10/python-api:v2.${{ github.run_number }}
-        cp api/deployment.yaml ./manifests/api/deployment.yaml
+        # docker image push ghcr.io/kmayer10/python-api:v2.${{ github.run_number }}
+        cp deployment.yaml ../manifests/api/deployment.yaml
     - name: Replace string in file
       uses: MathieuSoysal/replace-string-in-file@v1.0.0
       with:
@@ -34,5 +34,6 @@ jobs:
         new-string: $ImageName
     - name: Build & PUSH the Docker image
       run: |
+        git status
         cat ./manifests/api/deployment.yaml
 
